@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CF04 - Password Hashing Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+</head>
+<body>
+    <h2>Password Hashing & Weak Password (Demo Mật Khẩu)</h2>
+
+    <div class="container">
+        <div class="box danger-box">
+            <h3>1. Database Cũ (Plain Text)</h3>
+            <p>Nguy hiểm: Nếu lộ database, mật khẩu bị đọc ngay lập tức.</p>
+            <table>
+                <tr><th>ID</th><th>Username</th><th>Password (Lộ)</th></tr>
+                <tr><td>1</td><td>sinhvien01</td><td class="alert-text">123456</td></tr>
+                <tr><td>2</td><td>sinhvien02</td><td class="alert-text">password</td></tr>
+                <tr><td>3</td><td>admin_sv</td><td class="alert-text">qwerty</td></tr>
+            </table>
+        </div>
+
+        <div class="box form-box">
+            <h3>2. Hệ Thống Xác Thực Mới</h3>
+            
+            <div class="form-section">
+                <h4>Đăng Ký Tài Khoản</h4>
+                <input type="text" id="regUser" placeholder="Nhập Username">
+                <input type="password" id="regPass" placeholder="Nhập Mật khẩu">
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <span id="btnToggleReg" onclick="toggleTextPassword('regPass', 'btnToggleReg')" style="cursor:pointer; color:#007bff; font-size:12px; font-weight:bold;">[Hiện mật khẩu]</span>
+                </div>
+                <button onclick="register()">Đăng Ký (Băm Mật Khẩu)</button>
+            </div>
+
+            <hr>
+
+            <div class="form-section">
+                <h4>Đăng Nhập</h4>
+                <input type="text" id="logUser" placeholder="Nhập Username">
+                <input type="password" id="logPass" placeholder="Nhập Mật khẩu">
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <span id="btnToggleLog" onclick="toggleTextPassword('logPass', 'btnToggleLog')" style="cursor:pointer; color:#007bff; font-size:12px; font-weight:bold;">[Hiện mật khẩu]</span>
+                </div>
+                <button onclick="login()" class="btn-primary">Đăng Nhập</button>
+            </div>
+            
+            <div id="systemMessage" class="message-box">Hệ thống sẵn sàng...</div>
+        </div>
+
+        <div class="box safe-box">
+            <h3>3. Database Mới (Hashed + Salt)</h3>
+            <p>An toàn: Mật khẩu đã Hash không thể dịch ngược.</p>
+            <table>
+                <thead>
+                    <tr><th>Username</th><th>Password Hash (Bcrypt)</th></tr>
+                </thead>
+                <tbody id="hashedTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
